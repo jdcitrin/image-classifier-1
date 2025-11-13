@@ -1,7 +1,9 @@
 import os
 import numpy as np
+import pickle
 from skimage.io import imread
 from skimage.transform import resize
+
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
@@ -37,14 +39,13 @@ x_train, x_test, y_train, y_test = train_test_split(data, labels,
 classifier = SVC()
 para = {'gamma': [0.001, 0.01, 0.1],
         'C': [1, 10, 100, 1000]}
+
 grid_search = GridSearchCV(classifier, para)
-
 grid_search.fit(x_train, y_train)
-
 best_estimator = grid_search.best_estimator_
-
 y_pred = best_estimator.predict(x_test)
-
 acc = accuracy_score(y_pred, y_test)
 
 print('{}% of samples classified correctly'.format(acc*100))
+
+pickle.dump(best_estimator, open('./parking.p', 'wb'))
