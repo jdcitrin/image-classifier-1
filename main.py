@@ -12,7 +12,7 @@ data = []
 labels = []
 
 for i, c in enumerate(cat):
-    for file in os.listdir(dir, c):
+    for file in os.listdir(os.path.join(dir, c)):
         img_path = os.path.join(dir, c, file)
         img = imread(img_path)
         img = resize(img, (15, 15))
@@ -21,3 +21,6 @@ for i, c in enumerate(cat):
 
 data = np.array(data)
 labels = np.array(labels)
+
+
+
